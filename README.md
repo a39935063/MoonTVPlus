@@ -474,7 +474,7 @@ MoonTV 支持标准的苹果 CMS V10 API 格式。
 
 ### 本站已配置的片源（2026-11-14，部署时由 INIT_CONFIG 注入，首次启动写入数据库）
 
-点播源 24 个（均已在站内实测可搜到结果）：
+点播源 25 个（均已在站内实测可搜到结果）：
 
 | 资源 | API 地址 |
 | --- | --- |
@@ -502,6 +502,7 @@ MoonTV 支持标准的苹果 CMS V10 API 格式。
 | 爱蛋资源 | https://lovedan.net/api.php/provide/vod |
 | 速博资源 | https://subocaiji.com/api.php/provide/vod |
 | U酷资源88 | https://api.ukuapi88.com/api.php/provide/vod |
+| 魔都资源 | https://www.mdzyapi.com/api.php/provide/vod |
 
 > 已移除的失效源（2026-11-14 站内实测两次搜索均无结果）：步步高资源、豆瓣资源、飘零资源、索尼资源、旺旺资源、丫丫点播、樱花资源；另有牛牛/闪电/索尼-闪电、茅台、金鹰点播确认不可用，未加入。
 
