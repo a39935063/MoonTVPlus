@@ -514,6 +514,33 @@ MoonTV 支持标准的苹果 CMS V10 API 格式。
 | vbskycn/iptv 移动源 | 430 | https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.m3u |
 | suxuang/myIPTV 大合集 | 1273 | https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u |
 
+成人片源 22 个（未启用，仅作记录；以后需要时再导入站内配置。来源：KVideo 订阅 test.json 中的 premium 分组）：
+
+| 资源 | API 地址 |
+| --- | --- |
+| 乐播资源 | https://lbapi9.com/api.php/provide/vod |
+| CK | https://www.ckzy1.com/api.php/provide/vod |
+| jkun | https://jkunzyapi.com/api.php/provide/vod |
+| 155 | https://155api.com/api.php/provide/vod |
+| lsb | https://apilsbzy1.com/api.php/provide/vod |
+| 黄色仓库 | https://hsckzy.vip/api.php/provide/vod |
+| 玉兔 | https://yutuzy10.com/api.php/provide/vod |
+| 美少女资源站 | https://www.msnii.com/api/json.php |
+| 淫水机资源站 | https://www.xrbsp.com/api/json.php |
+| 香奶儿资源站 | https://www.gdlsp.com/api/json.php |
+| 白嫖资源站 | https://www.kxgav.com/api/json.php |
+| 黄AV资源站 | https://www.pgxdy.com/api/json.php |
+| 百万资源 | https://api.bwzyz.com/api.php/provide/vod |
+| 91麻豆 | https://91md.me/api.php/provide/vod |
+| 奥斯卡资源 | https://aosikazy.com/api.php/provide/vod |
+| 奶香香 | https://Naixxzy.com/api.php/provide/vod |
+| 森林资源 | https://slapibf.com/api.php/provide/vod |
+| 番号资源 | http://fhapi9.com/api.php/provide/vod |
+| 精品资源 | https://www.jingpinx.com/api.php/provide/vod |
+| 鲨鱼资源 | https://shayuapi.com/api.php/provide/vod |
+| 小鸡资源 | https://api.xiaojizy.live/provide/vod |
+| 细胞采集 | https://www.xxibaozyw.com/api.php/provide/vod |
+
 ## 自动更新
 
 可借助 [watchtower](https://github.com/containrrr/watchtower) 自动更新镜像容器
