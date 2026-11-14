@@ -472,6 +472,48 @@ custom_category 支持的自定义分类已知如下：
 
 MoonTV 支持标准的苹果 CMS V10 API 格式。
 
+### 本站已配置的片源（2026-11-14，部署时由 INIT_CONFIG 注入，首次启动写入数据库）
+
+点播源 24 个（均已在站内实测可搜到结果）：
+
+| 资源 | API 地址 |
+| --- | --- |
+| 如意资源 | https://cj.rycjapi.com/api.php/provide/vod |
+| 360资源 | https://360zy.com/api.php/provide/vod |
+| iqiyi资源 | https://www.iqiyizyapi.com/api.php/provide/vod |
+| 光速资源 | https://api.guangsuapi.com/api.php/provide/vod |
+| 非凡资源 | http://cj.ffzyapi.com/api.php/provide/vod |
+| 量子资源 | http://cj.lziapi.com/api.php/provide/vod |
+| 暴风资源 | https://bfzyapi.com/api.php/provide/vod |
+| 豪华资源 | https://hhzyapi.com/api.php/provide/vod |
+| 虎牙资源 | https://www.huyaapi.com/api.php/provide/vod |
+| 魔都资源 | https://caiji.moduapi.cc/api.php/provide/vod |
+| 金鹰资源 | http://jyzyapi.com/api.php/provide/vod |
+| 电影天堂 | https://caiji.dyttzyapi.com/api.php/provide/vod |
+| 红牛资源 | https://www.hongniuzy2.com/api.php/provide/vod |
+| 新浪资源 | http://api.xinlangapi.com/xinlangapi.php/provide/vod |
+| 魔都影视 | https://www.moduzy.com/api.php/provide/vod |
+| 1080JSON | https://api.1080zyku.com/inc/apijson.php |
+| 最大资源 | https://api.zuidapi.com/api.php/provide/vod |
+| 百度云资源 | https://api.apibdzy.com/api.php/provide/vod |
+| 极速资源 | https://jszyapi.com/api.php/provide/vod |
+| 无尽资源 | https://api.wujinapi.com/api.php/provide/vod |
+| iKun资源 | https://ikunzyapi.com/api.php/provide/vod |
+| 爱蛋资源 | https://lovedan.net/api.php/provide/vod |
+| 速博资源 | https://subocaiji.com/api.php/provide/vod |
+| U酷资源88 | https://api.ukuapi88.com/api.php/provide/vod |
+
+> 已移除的失效源（2026-11-14 站内实测两次搜索均无结果）：步步高资源、豆瓣资源、飘零资源、索尼资源、旺旺资源、丫丫点播、樱花资源；另有牛牛/闪电/索尼-闪电、茅台、金鹰点播确认不可用，未加入。
+
+直播源 4 个（M3U，共 1955 个频道，站内均已启用；实测仅 iptv-org 的 ABN China 能播，央视频道在 4 个源上均播不了，上游流地址已失效）：
+
+| 直播源 | 频道数 | M3U 地址 |
+| --- | --- | --- |
+| YueChan/Live 汇总源 | 96 | https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u |
+| iptv-org 中国频道 | 156 | https://iptv-org.github.io/iptv/countries/cn.m3u |
+| vbskycn/iptv 移动源 | 430 | https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.m3u |
+| suxuang/myIPTV 大合集 | 1273 | https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv4.m3u |
+
 ## 自动更新
 
 可借助 [watchtower](https://github.com/containrrr/watchtower) 自动更新镜像容器
