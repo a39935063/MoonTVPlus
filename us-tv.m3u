@@ -1,0 +1,11 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="PBS.us" group-title="美国电视",PBS
+https://pbs.lls.cdn.pbs.org/est/index_720p.m3u8
+#EXTINF:-1 tvg-id="NBCNewsNOW.us" group-title="美国电视",NBC News NOW (720p)
+https://d1si3n1st4nkgb.cloudfront.net/manifest/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod_default_samsungtvplus-xumo/c3e5cab1-8519-46b7-9b46-7939d9f13089/2.m3u8
+#EXTINF:-1 tvg-id="CNNInternational.us" group-title="美国电视",CNN International (720p)
+https://d3bp6dwmpbdajl.cloudfront.net/v1/manifest/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ury0meh5m4nzm/1d0d55fc-6087-4c15-a893-f476660cf4ac/1.m3u8
+#EXTINF:-1 tvg-id="FoxWeather.us" group-title="美国电视",Fox Weather (720p)
+https://247wlive.foxweather.com/stream/index_1280x720.m3u8
+#EXTINF:-1 tvg-id="NewsmaxTV.us" group-title="美国电视",Newsmax TV (720p)
+https://nmx1ota.akamaized.net/hls/live/2107010/Live_1/2.m3u8
