@@ -9,3 +9,9 @@ https://ntd02.akamaized.net/HD-LA/index.m3u8
 https://live.ntdtv.com/cnlive900/playlist.m3u8
 #EXTINF:-1 tvg-id="NTDAsiaPacific.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9f/New_Tang_Dynasty_Television_logo.svg" group-title="美国中文",新唐人亚太台
 https://live.ntdtv.com/aplive200/playlist.m3u8
+#EXTINF:-1 tvg-id="NTDCanada.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9f/New_Tang_Dynasty_Television_logo.svg" group-title="美国中文",新唐人加拿大台
+https://live.ntdtv.com/mllive860/playlist.m3u8
+#EXTINF:-1 tvg-id="NTDCanadaWest.ca" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9f/New_Tang_Dynasty_Television_logo.svg" group-title="美国中文",新唐人加拿大西部台
+https://live.ntdtv.com/cwlive220/playlist.m3u8
+#EXTINF:-1 tvg-id="TVBSAsia.tw" group-title="美国中文",TVBS 亚洲台
+http://38.64.72.148/hls/modn/list/4005/playlist.m3u8
