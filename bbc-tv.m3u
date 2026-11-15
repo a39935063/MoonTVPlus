@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF:-1 group-title="BBC" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/BBC_News_2022.svg/960px-BBC_News_2022.svg.png",BBC News North America (1080p)
+http://23.237.104.106:8080/USA_BBC_NEWS/index.m3u8
+#EXTINF:-1 group-title="BBC" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/BBC_News_2022.svg/960px-BBC_News_2022.svg.png",BBC News South Asia (1080p)
+https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8
+#EXTINF:-1 group-title="BBC" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/BBC_News_2022.svg/960px-BBC_News_2022.svg.png",BBC News Europe (576p)
+http://46.32.176.50/bbcworld/index.m3u8
