@@ -4,6 +4,7 @@
 
 import {
   AlertCircle,
+  ArrowUpDown,
   ChevronDown,
   ChevronUp,
   Download,
@@ -17,6 +18,7 @@ import {
   Tv,
   Wand2,
   X,
+  Zap,
 } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -199,6 +201,14 @@ function LivePageClient() {
   const [expandedMergedChannels, setExpandedMergedChannels] = useState<string[]>([]);
   const [lineTestResults, setLineTestResults] = useState<Record<string, LiveLineTestResult>>({});
   const [liveAutoSpeedTest, setLiveAutoSpeedTest] = useState(false);
+
+  // 一键测速（批量测速当前直播源全部频道）相关
+  const [batchTestRunning, setBatchTestRunning] = useState(false);
+  const [batchTestProgress, setBatchTestProgress] = useState<{ done: number; total: number } | null>(null);
+  // 本次批量测速的汇总（测完才出）：可用 / 全部
+  const [batchTestSummary, setBatchTestSummary] = useState<{ ok: number; total: number } | null>(null);
+  // 按速度排序（仅客户端展示偏好，不保存到服务端；批量测速完成后自动开启）
+  const [sortBySpeed, setSortBySpeed] = useState(false);
 
   // 节目单信息
   const [epgData, setEpgData] = useState<{
@@ -1378,6 +1388,87 @@ function LivePageClient() {
     return item.type === 'single' ? [item.channel] : item.channels;
   };
 
+  // 一键测速：批量测试当前直播源全部频道（全部分组）的线路，复用 handleTestLines 的 5 路并发。
+  // 测完自动开启按速度排序（可用频道排到最前面）；中途取消则不启用排序。
+  const runBatchSpeedTest = async () => {
+    if (batchTestRunning || !currentSource) return;
+
+    // 收集当前源全部频道的线路，去重：同一 source:id:url 只测一次
+    const uniqueByKey = new Map<string, LiveChannel>();
+    Object.values(groupedChannels).flat().forEach((channel) => {
+      const key = getLineTestKey(channel);
+      if (!uniqueByKey.has(key)) uniqueByKey.set(key, channel);
+    });
+    const channels = Array.from(uniqueByKey.values());
+    if (!channels.length) return;
+
+    // 先中断正在跑的自动/手动测速，避免并发冲突；清空同步锁里残留的在测 key
+    abortLiveTests();
+    inFlightKeysRef.current.clear();
+    const signal = ensureTestSignal();
+
+    setBatchTestRunning(true);
+    setBatchTestSummary(null);
+    setBatchTestProgress({ done: 0, total: channels.length });
+
+    let done = 0;
+    const results = await handleTestLines(channels, signal, false, () => {
+      done += 1;
+      setBatchTestProgress((prev) => (prev ? { ...prev, done } : prev));
+    });
+
+    setBatchTestRunning(false);
+    setBatchTestProgress(null);
+
+    // 被中断（切换分组/直播源/手动取消）则不启用排序、不出汇总
+    if (signal.aborted) return;
+
+    const okCount = Object.values(results).filter((result) => result.status === 'ok').length;
+    setBatchTestSummary({ ok: okCount, total: channels.length });
+    // 测完自动按速度排序：可用频道排到最前面
+    setSortBySpeed(true);
+  };
+
+  // 取消一键测速（复用统一的中断逻辑；runBatchSpeedTest 收尾时会复位状态）
+  const cancelBatchSpeedTest = () => {
+    abortLiveTests();
+  };
+
+  // 按速度排序后的频道列表（仅客户端展示，不改动原始顺序；关掉开关即恢复 M3U 原顺序）。
+  // 排序规则：可用（按最快线路速度降序，速度接近时首字节延迟小的在前）> 未测/测速中（保持原顺序）> 不可用（保持原顺序）。
+  const sortedChannelItems = useMemo<MergedChannelItem[]>(() => {
+    if (!sortBySpeed) return mergedChannelItems;
+
+    const withIndex = mergedChannelItems.map((item, index) => {
+      const channels = getItemChannels(item);
+      const bestLine = getBestTestedLine(channels);
+      const bestResult = bestLine ? lineTestResults[getLineTestKey(bestLine)] : undefined;
+      const allFailed =
+        channels.length > 0 &&
+        channels.every((channel) => lineTestResults[getLineTestKey(channel)]?.status === 'fail');
+      const rank = bestResult ? 0 : allFailed ? 2 : 1;
+      return {
+        item,
+        index,
+        rank,
+        speed: bestResult?.speedKBps || 0,
+        latency: bestResult?.firstByteMs || Number.MAX_SAFE_INTEGER,
+      };
+    });
+
+    withIndex.sort((a, b) => {
+      if (a.rank !== b.rank) return a.rank - b.rank;
+      if (a.rank === 0) {
+        const speedDiff = b.speed - a.speed;
+        if (Math.abs(speedDiff) > 1) return speedDiff;
+        if (a.latency !== b.latency) return a.latency - b.latency;
+      }
+      return a.index - b.index;
+    });
+
+    return withIndex.map((entry) => entry.item);
+  }, [mergedChannelItems, lineTestResults, sortBySpeed]);
+
   const isTestingLineGroup = (channels: LiveChannel[]) => {
     return channels.some((channel) => {
       const key = getLineTestKey(channel);
@@ -1596,7 +1687,8 @@ function LivePageClient() {
   const handleTestLines = async (
     channels: LiveChannel[],
     signal?: AbortSignal,
-    skipCompleted = false
+    skipCompleted = false,
+    onChannelDone?: (key: string, result: LiveLineTestResult) => void
   ): Promise<Record<string, LiveLineTestResult>> => {
     if (!channels.length) return {};
 
@@ -1639,6 +1731,7 @@ function LivePageClient() {
             if (signal?.aborted) return;
             results[key] = result;
             commitTestResults({ ...lineTestResultsRef.current, [key]: result });
+            onChannelDone?.(key, result);
           } catch (error) {
             if (signal?.aborted) return;
             const failResult: LiveLineTestResult = {
@@ -1651,6 +1744,7 @@ function LivePageClient() {
               ...lineTestResultsRef.current,
               [key]: failResult,
             });
+            onChannelDone?.(key, failResult);
           } finally {
             inFlightKeysRef.current.delete(key);
           }
@@ -1724,6 +1818,11 @@ function LivePageClient() {
     autoTestedGroupRef.current = '';
     // 切换直播源立即中断在跑的所有测速（自动 + 手动）
     abortLiveTests();
+    // 一键测速的状态也随源重置：进度/汇总作废，排序恢复原始顺序
+    setBatchTestRunning(false);
+    setBatchTestProgress(null);
+    setBatchTestSummary(null);
+    setSortBySpeed(false);
   }, [currentSource?.key]);
 
   // 开启自动测速后，自动测速当前分组下的线路
@@ -2981,6 +3080,59 @@ function LivePageClient() {
                       </div>
                     </div>
 
+                    {/* 一键测速 + 按速度排序 */}
+                    <div className='mb-3 -mx-6 px-6 flex-shrink-0'>
+                      <div className='flex items-center gap-2 flex-wrap'>
+                        {batchTestRunning ? (
+                          <>
+                            <span className='inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300'>
+                              <Loader2 className='w-3.5 h-3.5 animate-spin' />
+                              {batchTestProgress
+                                ? `测速中 ${batchTestProgress.done}/${batchTestProgress.total}`
+                                : '测速中...'}
+                            </span>
+                            <button
+                              type='button'
+                              onClick={cancelBatchSpeedTest}
+                              className='inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-red-400 hover:text-red-500 dark:hover:border-red-400 dark:hover:text-red-400'
+                            >
+                              <X className='w-3.5 h-3.5' />
+                              取消
+                            </button>
+                          </>
+                        ) : (
+                          <button
+                            type='button'
+                            onClick={runBatchSpeedTest}
+                            disabled={isSwitchingSource || !currentSource || Object.keys(groupedChannels).length === 0}
+                            title='测试当前直播源全部频道的速度，可用频道按速度排到最前面'
+                            className='inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-green-500 text-white hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed'
+                          >
+                            <Zap className='w-3.5 h-3.5' />
+                            一键测速
+                          </button>
+                        )}
+                        <button
+                          type='button'
+                          onClick={() => setSortBySpeed((prev) => !prev)}
+                          title={sortBySpeed ? '恢复原始顺序' : '可用频道按速度排到最前面'}
+                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+                            sortBySpeed
+                              ? 'border-green-500 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+                              : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:border-green-500 hover:text-green-600 dark:hover:border-green-500 dark:hover:text-green-400'
+                          }`}
+                        >
+                          <ArrowUpDown className='w-3.5 h-3.5' />
+                          按速度排序{sortBySpeed ? '：开' : '：关'}
+                        </button>
+                        {batchTestSummary && !batchTestRunning && (
+                          <span className='text-xs text-gray-500 dark:text-gray-400'>
+                            本次测速：可用 {batchTestSummary.ok} / {batchTestSummary.total}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
                     {/* 分组标签 */}
                     <div className='flex items-center gap-4 mb-4 border-b border-gray-300 dark:border-gray-700 -mx-6 px-6 flex-shrink-0'>
                       {/* 切换状态提示 */}
@@ -3051,8 +3203,8 @@ function LivePageClient() {
 
                     {/* 频道列表 */}
                     <div ref={channelListRef} className='flex-1 overflow-y-auto space-y-2 pb-4'>
-                      {mergedChannelItems?.length > 0 ? (
-                        mergedChannelItems.map(item => {
+                      {sortedChannelItems?.length > 0 ? (
+                        sortedChannelItems.map(item => {
                           if (item.type === 'single') {
                             const channel = item.channel;
                             const isActive = channel.id === currentChannel?.id;
