@@ -1,9 +1,7 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="NTDTV.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NTD_Logo_with_symbol.svg/960px-NTD_Logo_with_symbol.svg.png" group-title="美国中文",新唐人电视台 (1080p)
+#EXTINF:-1 tvg-id="NTDEast.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9f/New_Tang_Dynasty_Television_logo.svg" group-title="美国中文",新唐人电视台 (1080p)
 https://ntd02.akamaized.net/HD-NY/index.m3u8
-#EXTINF:-1 tvg-id="CCTV4America.cn@SD" tvg-logo="https://i.imgur.com/gBbLyqh.png" group-title="美国中文",CCTV-4 美洲
+#EXTINF:-1 tvg-id="CCTV4America.cn" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5f/CCTV-4_logo.svg" group-title="美国中文",CCTV-4 美洲
 https://h5cul1yar48um3t.wcetv.com/hls/cctv4.m3u8
-#EXTINF:-1 tvg-id="GuangdongTVAmerica.us@SD" tvg-logo="https://i.imgur.com/7J4qGjA.png" group-title="美国中文",广东电视台美洲
-https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
-#EXTINF:-1 tvg-id="NTDTV.us@West" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NTD_Logo_with_symbol.svg/960px-NTD_Logo_with_symbol.svg.png" group-title="美国中文",新唐人电视台美西 (720p)
+#EXTINF:-1 tvg-id="NTDWest.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9f/New_Tang_Dynasty_Television_logo.svg" group-title="美国中文",新唐人电视台美西 (720p)
 https://ntd02.akamaized.net/HD-LA/index.m3u8
