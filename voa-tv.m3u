@@ -1,7 +1,7 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="VoATVChina.cn" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音中文电视 (1080p)
-https://voa-ingest.akamaized.net/hls/live/2033878/tvmc08/playlist.m3u8
-#EXTINF:-1 tvg-id="VoATV.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音英语电视 (1080p)
-https://voa-ingest.akamaized.net/hls/live/2033874/tvmc06/playlist.m3u8
-#EXTINF:-1 tvg-id="VoATVPersian.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音波斯语电视 (1080p)
-https://voa-ingest.akamaized.net/hls/live/2033876/tvmc07/playlist.m3u8
+#EXTINF:-1 tvg-id="VoATVChina.cn" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音中文电视 (720p)
+https://voa-ingest.akamaized.net/hls/live/2033878/tvmc08/playlist_0720.m3u8
+#EXTINF:-1 tvg-id="VoATV.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音英语电视 (720p)
+https://voa-ingest.akamaized.net/hls/live/2033874/tvmc06/playlist_0720.m3u8
+#EXTINF:-1 tvg-id="VoATVPersian.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/d/dd/VOA_logo.svg" group-title="美国之音",美国之音波斯语电视 (720p)
+https://voa-ingest.akamaized.net/hls/live/2033876/tvmc07/playlist_0720.m3u8
