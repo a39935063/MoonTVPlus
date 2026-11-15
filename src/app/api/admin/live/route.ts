@@ -60,8 +60,8 @@ export async function POST(request: NextRequest) {
           liveInfo.channelNumber = 0;
         }
 
-        // 添加新的直播源
-        config.LiveConfig.push(liveInfo);
+        // 添加新的直播源（插到最前面：新源默认排在最上面，符合“新加的源放最上面”的规则）
+        config.LiveConfig.unshift(liveInfo);
         break;
 
       case 'delete':

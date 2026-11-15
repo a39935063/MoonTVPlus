@@ -18226,6 +18226,66 @@ const LiveSourceConfig = ({
       });
   };
 
+  // 上移/下移一位并立即保存（比拖拽更可靠：点一下就换位并保存）
+  const handleMoveLiveSource = (key: string, direction: -1 | 1) => {
+    const index = liveSources.findIndex((s) => s.key === key);
+    const newIndex = index + direction;
+    if (index === -1 || newIndex < 0 || newIndex >= liveSources.length) return;
+    const next = arrayMove(liveSources, index, newIndex);
+    setLiveSources(next);
+    const order = next.map((s) => s.key);
+    withLoading(`moveLiveSource_${key}`, () =>
+      callLiveSourceApi({ action: 'sort', order })
+    )
+      .then(() => {
+        setOrderChanged(false);
+      })
+      .catch(() => {
+        console.error('操作失败', 'move', key, direction);
+      });
+  };
+
+  // 标准顺序（与用户约定的 14 个源目标顺序一致）。只对已存在的源生效，
+  // 目标顺序之外的源保持原有相对顺序排在末尾。
+  const TARGET_LIVE_ORDER = [
+    'kidstv',
+    'voatv',
+    'uschinesetv',
+    'chntv',
+    'ustv',
+    'yuechan',
+    'iptvorg',
+    'vbskycn',
+    'suxuang',
+    'radio',
+    'auradio',
+    'usradio',
+    'bbc',
+    'bbctv',
+  ];
+
+  // 一键恢复标准顺序并立即保存
+  const handleRestoreTargetOrder = () => {
+    const ordered = TARGET_LIVE_ORDER.map((key) =>
+      liveSources.find((s) => s.key === key)
+    ).filter((s): s is (typeof liveSources)[number] => Boolean(s));
+    const rest = liveSources.filter(
+      (s) => !TARGET_LIVE_ORDER.includes(s.key)
+    );
+    const next = [...ordered, ...rest];
+    setLiveSources(next);
+    const order = next.map((s) => s.key);
+    withLoading('restoreLiveSourceOrder', () =>
+      callLiveSourceApi({ action: 'sort', order })
+    )
+      .then(() => {
+        setOrderChanged(false);
+      })
+      .catch(() => {
+        console.error('操作失败', 'restore order', order);
+      });
+  };
+
   // 可拖拽行封装 (dnd-kit)
   const DraggableRow = ({ liveSource }: { liveSource: LiveDataSource }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
@@ -18312,6 +18372,40 @@ const LiveSourceConfig = ({
           </select>
         </td>
         <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2'>
+          <button
+            onClick={() => handleMoveLiveSource(liveSource.key, -1)}
+            disabled={
+              isLoading(`moveLiveSource_${liveSource.key}`) ||
+              liveSources.findIndex((s) => s.key === liveSource.key) === 0
+            }
+            title='上移一位'
+            className={`inline-flex items-center px-2 py-1.5 rounded-full text-xs font-medium ${buttonStyles.roundedSecondary} ${
+              isLoading(`moveLiveSource_${liveSource.key}`) ||
+              liveSources.findIndex((s) => s.key === liveSource.key) === 0
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
+            }`}
+          >
+            <ChevronUp className='h-4 w-4' />
+          </button>
+          <button
+            onClick={() => handleMoveLiveSource(liveSource.key, 1)}
+            disabled={
+              isLoading(`moveLiveSource_${liveSource.key}`) ||
+              liveSources.findIndex((s) => s.key === liveSource.key) ===
+                liveSources.length - 1
+            }
+            title='下移一位'
+            className={`inline-flex items-center px-2 py-1.5 rounded-full text-xs font-medium ${buttonStyles.roundedSecondary} ${
+              isLoading(`moveLiveSource_${liveSource.key}`) ||
+              liveSources.findIndex((s) => s.key === liveSource.key) ===
+                liveSources.length - 1
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
+            }`}
+          >
+            <ChevronDown className='h-4 w-4' />
+          </button>
           <button
             onClick={() => handleToggleEnable(liveSource.key)}
             disabled={isLoading(`toggleLiveSource_${liveSource.key}`)}
@@ -18699,6 +18793,24 @@ const LiveSourceConfig = ({
           </button>
         </div>
       )}
+
+      {/* 一键恢复标准顺序：按约定的 14 个源目标顺序排列并立即保存 */}
+      <div className='flex justify-end'>
+        <button
+          onClick={handleRestoreTargetOrder}
+          disabled={isLoading('restoreLiveSourceOrder')}
+          title='按标准顺序排列：少儿电视、美国之音电视台、美国中文电视台、中国电视台、美国电视台、YueChan、iptv-org、vbskycn、suxuang、国际电台、澳大利亚电台、美国电台、BBC电台、BBC电视'
+          className={`px-3 py-1.5 text-sm ${
+            isLoading('restoreLiveSourceOrder')
+              ? buttonStyles.disabled
+              : buttonStyles.secondary
+          }`}
+        >
+          {isLoading('restoreLiveSourceOrder')
+            ? '恢复中...'
+            : '一键恢复标准顺序'}
+        </button>
+      </div>
 
       {/* 通用弹窗组件 */}
       <AlertModal
