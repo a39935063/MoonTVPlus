@@ -3,3 +3,7 @@
 https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
 #EXTINF:-1 tvg-id="CCTV1.cn" group-title="中国电视",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
+#EXTINF:-1 tvg-id="CCTV12.cn" group-title="中国电视",CCTV-12 社会与法
+http://74.91.26.218:82/live/cctv12hd.m3u8
+#EXTINF:-1 tvg-id="GuangdongSatelliteTV.cn" group-title="中国电视",广东卫视
+https://h5cul1yar48um3t.wcetv.com/hls/gdsatellite.m3u8
