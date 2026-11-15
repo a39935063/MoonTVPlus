@@ -1,0 +1,3 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="RTHK31.hk" group-title="香港台",香港电台31台
+https://rthktv31-live.akamaized.net/hls/live/2036818/RTHKTV31/master.m3u8
