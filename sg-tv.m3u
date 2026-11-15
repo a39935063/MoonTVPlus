@@ -1,0 +1,5 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="Channel8.sg" group-title="新加坡台",新传媒8频道
+https://cdn.qd.je/163189/ch8
+#EXTINF:-1 tvg-id="ChannelU.sg" group-title="新加坡台",U频道
+https://cdn.qd.je/163189/chu
