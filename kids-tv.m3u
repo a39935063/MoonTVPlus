@@ -3,7 +3,15 @@
 https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8
 #EXTINF:-1 tvg-id="MeTVToons.us" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/3/3f/MeTV_Toons_logo.svg" group-title="少儿电视",MeTV Toons
 https://sr-live-weigel1.akamaized.net/out/v1/0d1dbf29e64e47bc991796cc24fbeb97/index_2.m3u8
+#EXTINF:-1 tvg-id="KartoonChannel.us" group-title="少儿电视",Kartoon Channel
+https://lightning-fnf-samsungaus.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="ToonGoggles.us" group-title="少儿电视",ToonGoggles
+https://amg01329-otterainc-toongoggles-samsungau-ad-4c.amagi.tv/playlist/amg01329-otterainc-toongoggles-samsungau/playlist.m3u8
+#EXTINF:-1 tvg-id="ZooMoo.au" group-title="少儿电视",ZooMoo
+https://zoomoo-samsungau.amagi.tv/playlist.m3u8
+#EXTINF:-1 tvg-id="PocketWatch.us" group-title="少儿电视",pocket.watch
+https://dl74gpgmnb7i8.cloudfront.net/pocketwatch_GameOn.m3u8
 #EXTINF:-1 tvg-id="CCTV10.cn" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/5/5f/CCTV-10_logo.svg" group-title="少儿电视",CCTV-10 科教
 https://cdn4.skygo.mn/live/disk1/CCTV-10/HLSv3-FTA/CCTV-10-avc1_2000000=3-mp4a_256000_eng=10.m3u8
-#EXTINF:-1 tvg-id="CartoonNetwork.asia" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/80/Cartoon_Network_logo.svg" group-title="少儿电视",卡通频道 (亚洲英文版)
+#EXTINF:-1 tvg-id="CartoonNetwork.asia" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/8/80/Cartoon_Network_logo.svg" group-title="少儿电视",卡通频道 (亚洲英文版）
 https://cdn4.skygo.mn/live/disk1/Cartoon_Network/HLSv3-FTA/Cartoon_Network-avc1_3000000=12-mp4a_256000_eng=6.m3u8
