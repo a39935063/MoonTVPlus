@@ -1,9 +1,11 @@
 #EXTM3U
-#EXTINF:-1 tvg-id="GDTV America.cn" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/2/2e/Guangdong_TV_logo.svg" group-title="中国电视",广东电视台美洲
-https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
-#EXTINF:-1 tvg-id="CCTV1.cn" group-title="中国电视",CCTV-1 综合
+#EXTINF:-1 tvg-id="CCTV1.cn" group-title="中国电视台",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
-#EXTINF:-1 tvg-id="CCTV12.cn" group-title="中国电视",CCTV-12 社会与法
+#EXTINF:-1 tvg-id="CCTV12.cn" group-title="中国电视台",CCTV-12 社会与法
 http://74.91.26.218:82/live/cctv12hd.m3u8
-#EXTINF:-1 tvg-id="GuangdongSatelliteTV.cn" group-title="中国电视",广东卫视
+#EXTINF:-1 tvg-id="GDTV.cn" group-title="中国电视台",广东电视台美洲
+https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
+#EXTINF:-1 tvg-id="GDTVSatellite.cn" group-title="中国电视台",广东卫视
 https://h5cul1yar48um3t.wcetv.com/hls/gdsatellite.m3u8
+#EXTINF:-1 tvg-id="CCTV4Europe.cn" group-title="中国电视台",CCTV-4 欧洲
+https://dash2.antik.sk/live/test_cctv_tizen/playlist.m3u8
