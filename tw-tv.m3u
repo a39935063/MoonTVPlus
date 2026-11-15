@@ -1,3 +1,5 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="TTVNews.tw" group-title="台湾台",台视新闻
 https://live.wcetv.com/hls/master-ttvnews.m3u8
+#EXTINF:-1 tvg-id="CGNTVChinese.tw" group-title="台湾台",CGNTV 中文台
+https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8
