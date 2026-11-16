@@ -18248,23 +18248,23 @@ const LiveSourceConfig = ({
   // 标准顺序（与用户约定的 17 个源目标顺序一致）。只对已存在的源生效，
   // 目标顺序之外的源保持原有相对顺序排在末尾。
   const TARGET_LIVE_ORDER = [
-    'sgtv',
     'kidstv',
-    'voatv',
     'uschinesetv',
-    'chntv',
+    'voatv',
     'ustv',
+    'chntv',
     'twtv',
+    'bbctv',
+    'sgtv',
     'hktv',
-    'yuechan',
-    'iptvorg',
+    'bbc',
+    'usradio',
+    'auradio',
+    'radio',
     'vbskycn',
     'suxuang',
-    'radio',
-    'auradio',
-    'usradio',
-    'bbc',
-    'bbctv',
+    'yuechan',
+    'iptvorg',
   ];
 
   // 一键恢复标准顺序并立即保存
@@ -18802,7 +18802,7 @@ const LiveSourceConfig = ({
         <button
           onClick={handleRestoreTargetOrder}
           disabled={isLoading('restoreLiveSourceOrder')}
-          title='按标准顺序排列：新加坡台、少儿电视、美国之音电视台、美国中文电视台、中国电视台、美国电视台、台湾台、香港台、YueChan、iptv-org、vbskycn、suxuang、国际电台、澳大利亚电台、美国电台、BBC电台、BBC电视'
+          title='按标准顺序排列：少儿电视、美国中文电视台、美国之音电视台、美国电视台、中国电视台、台湾台、BBC电视、新加坡台、香港台、BBC电台、美国电台、澳大利亚电台、国际电台、vbskycn、suxuang、YueChan、iptv-org'
           className={`px-3 py-1.5 text-sm ${
             isLoading('restoreLiveSourceOrder')
               ? buttonStyles.disabled
